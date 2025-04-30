@@ -1,7 +1,6 @@
 import re
-from typing import Dict, List, Sequence, Union
-
 import torch
+from typing import Dict, List, Sequence, Union
 
 from . import register_collator
 from .base import BaseDataCollator

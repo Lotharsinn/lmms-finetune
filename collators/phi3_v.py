@@ -1,13 +1,11 @@
-import re
-from typing import Dict, List, Sequence, Union
 import PIL
-
+import re
 import torch
 from transformers.feature_extraction_utils import BatchFeature
+from typing import Dict, List, Sequence, Union
 
 from . import register_collator
 from .base import BaseDataCollator
-
 
 link = "https://github.com/microsoft/Phi-3CookBook/blob/5de3fe11f332109a111b2a4e3dfff467b31af7d7/code/04.Finetuning/vision_finetuning/finetune_hf_trainer_docvqa.py#L211"
 

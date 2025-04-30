@@ -1,6 +1,5 @@
-from typing import Tuple
-
 from transformers import AutoProcessor, MllamaForConditionalGeneration, PreTrainedTokenizer, AutoConfig
+from typing import Tuple
 
 from . import register_loader
 from .base import BaseModelLoader

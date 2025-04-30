@@ -1,15 +1,13 @@
 import math
-from typing import List, Dict, Optional
-
-from deepspeed import zero
-from deepspeed.runtime.zero.partition_parameters import ZeroParamStatus
-
 import torch
 import torch.distributed as dist
-from torch.utils.data import Sampler
 import transformers
+from deepspeed import zero
+from deepspeed.runtime.zero.partition_parameters import ZeroParamStatus
+from torch.utils.data import Sampler
 from transformers import Trainer
 from transformers.trainer import has_length
+from typing import List, Dict, Optional
 
 
 class NoTextOnlyBatchSampler(Sampler):

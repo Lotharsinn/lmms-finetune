@@ -1,13 +1,11 @@
-import re
-from typing import Dict, List, Sequence, Union
 import PIL
-
 import numpy as np
+import re
 import torch
+from typing import Dict, List, Sequence, Union
 
 from . import register_collator
 from .base import BaseDataCollator
-
 
 SYSTEM_MESSAGE = "You are a helpful assistant."
 DEFAULT_IM_START_TOKEN = "<|im_start|>"

@@ -3,12 +3,10 @@
 
 import re
 from inspect import isfunction
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
-
 from transformers.tokenization_utils_base import BatchEncoding
 from transformers.utils import TensorType, get_json_schema, logging
 from transformers.utils.chat_template_utils import _compile_jinja_template, _render_with_assistant_indices
-
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 logger = logging.get_logger(__name__)
 

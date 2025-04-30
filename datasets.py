@@ -1,12 +1,10 @@
 import av
-import os
 import json
-from PIL import Image
-from typing import Dict, List, Optional
-
 import numpy as np
+import os
+from PIL import Image
 from torch.utils.data import Dataset
-
+from typing import Dict, List, Optional
 
 TO_LOAD_IMAGE: Dict[str, bool] = {
     "llava-1.5": True,

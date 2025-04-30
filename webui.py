@@ -1,8 +1,8 @@
-import os
-import sys
-import subprocess
-from pathlib import Path
 import gradio as gr
+import os
+import subprocess
+import sys
+from pathlib import Path
 
 from supported_models import MODEL_HF_PATH, MODEL_FAMILIES
 

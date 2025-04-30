@@ -1,10 +1,9 @@
-from typing import Dict, List
 from collections import OrderedDict
+from typing import Dict, List
 
 from collators import COLLATORS
 from datasets import TO_LOAD_IMAGE
 from loaders import LOADERS
-
 
 MODULE_KEYWORDS: Dict[str, Dict[str, List]] = {
     "llava-1.5": {

@@ -1,17 +1,15 @@
-import re
-from typing import Dict, List, Sequence, Union
-
-import numpy as np
 import PIL
+import numpy as np
+import re
 import torch
 from transformers.image_utils import get_image_size, to_numpy_array
 from transformers.models.mllama.processing_mllama import MllamaProcessorKwargs
 from transformers.utils import logging
+from typing import Dict, List, Sequence, Union
 
 from . import register_collator
 from .base import BaseDataCollator
 from .chat_template_monkey_patch import apply_chat_template
-
 
 logger = logging.get_logger(__name__)
 

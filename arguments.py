@@ -1,7 +1,6 @@
-from typing import Dict, Optional, List
-from dataclasses import dataclass, field
-
 import transformers
+from dataclasses import dataclass, field
+from typing import Dict, Optional, List
 
 from supported_models import MODEL_HF_PATH, MODEL_FAMILIES
 

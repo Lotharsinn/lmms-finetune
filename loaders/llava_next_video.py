@@ -1,6 +1,6 @@
+from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer, \
+    AutoConfig
 from typing import Tuple
-
-from transformers import LlavaNextVideoProcessor, LlavaNextVideoForConditionalGeneration, PreTrainedTokenizer, AutoConfig
 
 from . import register_loader
 from .base import BaseModelLoader

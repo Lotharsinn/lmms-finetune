@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
-from typing import Dict, Sequence, Optional
-
 import torch
+from abc import ABC, abstractmethod
 from transformers import PreTrainedTokenizer, AutoProcessor, AutoConfig
+from typing import Dict, Sequence, Optional
 
 
 class BaseDataCollator(ABC, object):
