@@ -1,8 +1,10 @@
 import importlib
+import io
 import sys
 import types
 import unittest
 from argparse import Namespace
+from contextlib import redirect_stdout
 from unittest.mock import patch
 
 
@@ -46,16 +48,17 @@ class MergeLoraWeightsTest(unittest.TestCase):
                 return None, FakeSaveable(), FakeSaveable(), object()
 
         module = self.import_with_stubs(FakeLoader)
-        module.merge_lora(
-            Namespace(
-                model_id="test-model",
-                model_local_path="/models/local",
-                model_path="/adapters/lora",
-                model_save_path="",
-                load_model=False,
-                load_4bit=False,
+        with redirect_stdout(io.StringIO()):
+            module.merge_lora(
+                Namespace(
+                    model_id="test-model",
+                    model_local_path="/models/local",
+                    model_path="/adapters/lora",
+                    model_save_path="",
+                    load_model=False,
+                    load_4bit=False,
+                )
             )
-        )
 
         self.assertEqual("/models/local", captured["model_local_path"])
 
@@ -70,16 +73,17 @@ class MergeLoraWeightsTest(unittest.TestCase):
                 return None, FakeSaveable(), FakeSaveable(), object()
 
         module = self.import_with_stubs(FakeLoader)
-        module.merge_lora(
-            Namespace(
-                model_id="test-model",
-                model_local_path="",
-                model_path="/adapters/lora",
-                model_save_path="",
-                load_model=False,
-                load_4bit=False,
+        with redirect_stdout(io.StringIO()):
+            module.merge_lora(
+                Namespace(
+                    model_id="test-model",
+                    model_local_path="",
+                    model_path="/adapters/lora",
+                    model_save_path="",
+                    load_model=False,
+                    load_4bit=False,
+                )
             )
-        )
 
         self.assertEqual("hf/model", captured["model_local_path"])
 
