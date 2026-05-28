@@ -16,21 +16,22 @@ IGNORE_INDEX = -100
 @register_collator("qwen2-vl")
 class Qwen2VLDataCollator(BaseDataCollator):
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
-        if "images" in instances[0]:
-            is_video = False
-        elif "videos" in instances[0]:
-            is_video = True
+        is_video = is_video_batch(instances)
             
         if not is_video:
             grid_key = "image_grid_thw"
             pixel_key = "pixel_values"
             videos = None
             images: List[List[PIL.Image.Image]] = [instance["images"] for instance in instances]
+            vision_key = "images"
+            vision_token = "<image>"
         else:
             grid_key = "video_grid_thw"
             pixel_key = "pixel_values_videos"
             images = None
-            videos: List[np.ndarray] = [x for instance in instances for x in instance["videos"]]
+            videos: List[List[np.ndarray]] = [instance["videos"] for instance in instances]
+            vision_key = "videos"
+            vision_token = "<video>"
 
         # texts
         # the dataset implementation assume conversations are [user, assistant, user, assistant, ...]
@@ -56,7 +57,7 @@ class Qwen2VLDataCollator(BaseDataCollator):
             
             for i, text in enumerate(cur_convs):
                 if i % 2 == 0:
-                    num_image_tokens = len([m.start() for m in re.finditer("<image>", text)])
+                    num_image_tokens = len([m.start() for m in re.finditer(vision_token, text)])
                     total_image_tokens += num_image_tokens
 
                     cur_text.append({
@@ -157,7 +158,8 @@ class Qwen2VLDataCollator(BaseDataCollator):
         batch_vision_grid_thw = torch.cat(batch_vision_grid_thw, dim=0)
 
         # sanity check
-        assert total_image_tokens == count_innermost_elements(images), "Number of image tokens does not match the number of images"
+        vision_inputs = videos if is_video else images
+        assert total_image_tokens == count_innermost_elements(vision_inputs), f"Number of {vision_key} tokens does not match the number of {vision_key}"
 
         data_dict = dict(
             input_ids=batch_input_ids,
@@ -169,6 +171,16 @@ class Qwen2VLDataCollator(BaseDataCollator):
         
         return data_dict
     
+
+def is_video_batch(instances: Sequence[Dict]) -> bool:
+    has_images = any(len(instance["images"]) > 0 for instance in instances)
+    has_videos = any(len(instance["videos"]) > 0 for instance in instances)
+
+    if has_images and has_videos:
+        raise ValueError("Qwen2-VL batches cannot mix image and video samples.")
+
+    return has_videos
+
 
 def count_innermost_elements(nested_list):
     if not isinstance(nested_list, list):
